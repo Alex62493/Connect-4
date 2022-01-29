@@ -1,7 +1,10 @@
-import pygame
-import thorpy
 import sys
+import pygame
 
+from bg import bg
+import base64
+from io import BytesIO
+from PIL import Image
 
 class GUI:
 
@@ -17,7 +20,13 @@ class GUI:
         self.__screen.fill((255, 255, 255))
         self.__clock = pygame.time.Clock()
 
-        self.__bg = pygame.image.load('bg.jpg')
+        byte_data = base64.b64decode(bg)
+        image_data = BytesIO(byte_data)
+        image = Image.open(image_data)
+        image = image.save("bg1.jpg")
+        #self.__bg = pygame.image.fromstring(image, (1280, 720), "RGB")
+        #self.__bg = pygame.image.load(image)
+        self.__bg = pygame.image.load('bg1.jpg')
         pygame.display.flip()
         self.main_menu()
 
@@ -62,7 +71,7 @@ class GUI:
     def main_menu(self):
         while True:
 
-            font_title = pygame.font.SysFont(None, 70)
+            font_title = pygame.font.Font(None, 70)
             self.__screen.fill((0, 0, 0))
             self.__screen.blit(self.__bg, (0, 0))
             title_x = int(self.__width / 2 - self.__width / 10)
@@ -94,7 +103,7 @@ class GUI:
                     self.player_vs_ai()
             self.__screen.blit(button_surface, button1_trans)
             self.__screen.blit(button_surface, button2_trans)
-            font_button = pygame.font.SysFont(None, 35)
+            font_button = pygame.font.Font(None, 35)
             self.draw_text('Player vs Player', font_button, self.white, self.__screen, button=button1)
             self.draw_text('Player vs AI', font_button, self.white, self.__screen, button=button2)
 
@@ -246,7 +255,8 @@ class GUI:
         while True:
             x = int(self.__width / 2 - self.__width / 10)
             y = int(self.__height / 20)
-            self.draw_text(msg, pygame.font.SysFont(None, 70), self.white, self.__screen, x=x, y=y)
+            font_over = pygame.font.SysFont(None, 70);
+            self.draw_text(msg, font_over, self.white, self.__screen, x=x, y=y)
             pygame.display.update()
 
             for event in pygame.event.get():

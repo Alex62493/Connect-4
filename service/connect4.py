@@ -7,7 +7,6 @@ The service will have 2 main functions: player_vs_player and player_vs_computer
 The human player will always move first
 """
 
-from board.board import Board
 from service.minmax import MinMax
 
 

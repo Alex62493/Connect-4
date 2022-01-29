@@ -27,7 +27,7 @@ class MinMax:
 
     @property
     def depth(self):
-        return 6
+        return 5
 
     def min_max(self, nr, alpha, beta, depth):
         mask = Mask(nr)
